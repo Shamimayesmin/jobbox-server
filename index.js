@@ -127,11 +127,11 @@ const run = async () => {
 			res.send({ status: true, data: result });
 		});
 
-		// app.get("/jobs", async (req, res) => {
-		// 	const cursor = jobCollection.find({});
-		// 	const result = await cursor.toArray();
-		// 	res.send({ status: true, data: result });
-		// });
+		app.get("/jobs", async (req, res) => {
+			const cursor = jobCollection.find({});
+			const result = await cursor.toArray();
+			res.send({ status: true, data: result });
+		});
 
 		app.get("/job/:id", async (req, res) => {
 			const id = req.params.id;
