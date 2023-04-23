@@ -133,12 +133,12 @@ const run = async () => {
 			res.send({ status: true, data: result });
 		});
 
-		app.get("/job/:id", async (req, res) => {
-			const id = req.params.id;
+		// app.get("/job/:id", async (req, res) => {
+		// 	const id = req.params.id;
 
-			const result = await jobCollection.findOne({ _id: ObjectId(id) });
-			res.send({ status: true, data: result });
-		});
+		// 	const result = await jobCollection.findOne({ _id: ObjectId(id) });
+		// 	res.send({ status: true, data: result });
+		// });
 
 		app.post("/job", async (req, res) => {
 			const job = req.body;
