@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const cors = require("cors");
 
 const port = process.env.PORT || 5000;
@@ -48,9 +48,9 @@ const run = async () => {
 			const jobId = req.body.jobId;
 			const email = req.body.email;
 
-			const filter = { _id: ObjectId(jobId) };
+			const filter = { _id: new ObjectId(jobId) };
 			const updateDoc = {
-				$push: { applicants: { id: ObjectId(userId), email } },
+				$push: { applicants: { id: new ObjectId(userId), email } },
 			};
 
 			const result = await jobCollection.updateOne(filter, updateDoc);
@@ -68,11 +68,11 @@ const run = async () => {
 			const email = req.body.email;
 			const question = req.body.question;
 
-			const filter = { _id: ObjectId(jobId) };
+			const filter = { _id: new ObjectId(jobId) };
 			const updateDoc = {
 				$push: {
 					queries: {
-						id: ObjectId(userId),
+						id: new ObjectId(userId),
 						email,
 						question: question,
 						reply: [],
@@ -133,12 +133,12 @@ const run = async () => {
 			res.send({ status: true, data: result });
 		});
 
-		// app.get("/job/:id", async (req, res) => {
-		// 	const id = req.params.id;
+		app.get("/job/:id", async (req, res) => {
+			const id = req.params.id;
 
-		// 	const result = await jobCollection.findOne({ _id: ObjectId(id) });
-		// 	res.send({ status: true, data: result });
-		// });
+			const result = await jobCollection.findOne({ _id: new ObjectId(id) });
+			res.send({ status: true, data: result });
+		});
 
 		app.post("/job", async (req, res) => {
 			const job = req.body;
